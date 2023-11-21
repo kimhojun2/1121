@@ -1,0 +1,15 @@
+DML
+DDL
+DCL
+TCL
+
+트렌젝션
+
+CASE
+
+GROUP BY, ORDERBY, HAVING
+
+JOIN
+
+
+Null 관련
