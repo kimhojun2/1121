@@ -21,6 +21,7 @@
   
   onMounted(() => {
     store.getArticles()
+    console.log(store)
   })
   
   </script>

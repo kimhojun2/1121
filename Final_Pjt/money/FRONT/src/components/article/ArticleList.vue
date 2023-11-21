@@ -4,10 +4,10 @@
         <hr>
     </div>
     <div v-if="store.articles">
-    <ArticleItem 
-        v-for=" article in store.articles"
-        :key="article.id"
-        :article="article"
+        <ArticleItem 
+            v-for=" article in store.articles"
+            :key="article.id"
+            :article="article"
         />
     </div>
     <div v-else>

@@ -13,7 +13,7 @@ export const useCounterStore = defineStore('counter', () => {
   const articles = ref([])
   const token = ref(null)
   const name = ref('')
-  const currentUser = ref()
+  const currentUser = ref('')
   const isLogin = computed(() => {
     if (token.value === null) {
       return false
@@ -36,25 +36,39 @@ export const useCounterStore = defineStore('counter', () => {
       })
   }
 
-  const logIn = function (payload) {
-    const { username, password } = payload
-    name.value = username
-    axios({
-      method: 'post',
-      url: `${API_URL}/accounts/login/`,
-      data: {
-        username, password
-      }
-    })
-      .then((res) => {
-        token.value = res.data.key 
-        router.push({ name: 'HomeView' })
-        console.log(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  const logIn = async function (payload) {
+    try {
+      const { username, password } = payload;
+  
+      // 첫 번째 axios 요청
+      const firstRes = await axios({
+        method: 'post',
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username, password
+        }
+      });
+  
+      // 첫 번째 요청이 성공한 경우
+      token.value = firstRes.data.key;
+      name.value = username
+      router.push({ name: 'HomeView' });
+  
+      // 두 번째 axios 요청
+      const secondRes = await axios({
+        method: 'get',
+        url: `${API_URL}/profile/accounts/${username}/`,
+      });
+  
+      // 두 번째 요청이 성공한 경우
+      currentUser.value = secondRes.data
+      console.log(111111111111111111111)
+      // 추가 작업 수행 가능
+    } catch (err) {
+      // 오류 처리
+      console.log(err);
+    }
+  };
 
   const signUp = function (payload) {
     const { username, password1, password2, age, money, salary } = payload
@@ -84,6 +98,8 @@ export const useCounterStore = defineStore('counter', () => {
     })
       .then((res) => {
         token.value = null
+        name.value = ''
+        currentUser.value = ''
         // articles.value = []
         router.push({ name: 'HomeView' })
       })
@@ -139,5 +155,5 @@ export const useCounterStore = defineStore('counter', () => {
       })
   }
 
-  return { name,  articles, deps, fins, opts, API_URL, getRates, rates, getFins, getdeps, getArticles, signUp, logIn, token, isLogin, logOut }
+  return { name, currentUser, articles, deps, fins, opts, API_URL, getRates, rates, getFins, getdeps, getArticles, signUp, logIn, token, isLogin, logOut }
 },{persist:true})

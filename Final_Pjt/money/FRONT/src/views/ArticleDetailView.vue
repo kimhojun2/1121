@@ -5,10 +5,11 @@
         <h1>{{ article_detail.content }}</h1>
         <h1>{{ article_detail.created_at }}</h1>
         <h1>{{ article_detail.updated_at }}</h1>
+        <h1>{{ article_detail.user }}</h1>
         <!-- <p>{{ author.user }}</p> -->
         <button @click="goBack">목록으로 돌아가기</button>
         <div v-if="store.token">
-          <div>
+          <div v-if="store.currentUser">
             <button @click="startEditing">수정하기</button>
           </div>
       </div>
