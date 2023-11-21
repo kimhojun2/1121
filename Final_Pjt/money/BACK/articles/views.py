@@ -41,3 +41,6 @@ def article_detail(request, article_pk):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
+            
+
+

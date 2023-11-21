@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import User
-from .serializers import CustomRegisterSerializer, ItemSerializer
+from .serializers import CustomRegisterSerializer, ItemSerializer, ProfileSerializer
 import requests
 
 
@@ -37,6 +37,21 @@ def profile(request, username):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data)
+            
 
-           
+@api_view(['PUT'])
+def profile_edit(request, username):
+    if request.method == 'PUT':
+        oneprofile = User.objects.get(username=username)
+        serializer = ProfileSerializer(oneprofile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+
+@api_view(['GET'])
+def article_user(request, user_pk):
+    user = User.objects.get(pk=user_pk)
+    serializer = ProfileSerializer(user)
+    return Response(serializer.data)
         

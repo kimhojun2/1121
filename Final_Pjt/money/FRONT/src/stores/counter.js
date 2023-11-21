@@ -13,7 +13,7 @@ export const useCounterStore = defineStore('counter', () => {
   const articles = ref([])
   const token = ref(null)
   const name = ref('')
-  const userinfo = ref({})
+  const currentUser = ref()
   const isLogin = computed(() => {
     if (token.value === null) {
       return false
@@ -30,7 +30,6 @@ export const useCounterStore = defineStore('counter', () => {
     })
       .then((res) =>{
         fins.value = res.data
-
       })
       .catch((err) => {
         console.log(err)
@@ -48,8 +47,9 @@ export const useCounterStore = defineStore('counter', () => {
       }
     })
       .then((res) => {
-        token.value = res.data.key
+        token.value = res.data.key 
         router.push({ name: 'HomeView' })
+        console.log(res)
       })
       .catch((err) => {
         console.log(err)
@@ -139,6 +139,5 @@ export const useCounterStore = defineStore('counter', () => {
       })
   }
 
-
-  return {  userinfo, name, articles, deps, fins, opts, API_URL, getRates, rates, getFins, getdeps, getArticles, signUp, logIn, token, isLogin, logOut }
+  return { name,  articles, deps, fins, opts, API_URL, getRates, rates, getFins, getdeps, getArticles, signUp, logIn, token, isLogin, logOut }
 },{persist:true})

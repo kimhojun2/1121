@@ -1,9 +1,11 @@
 <template>
     <div>
       <h1>Article Page</h1>
+      <div v-if="store.token">
       <RouterLink :to="{ name: 'CreateView' }">
         [CREATE]
       </RouterLink>
+      </div>
       <ArticleList />
     </div>
   </template>

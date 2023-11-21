@@ -5,9 +5,13 @@
         <h1>{{ article_detail.content }}</h1>
         <h1>{{ article_detail.created_at }}</h1>
         <h1>{{ article_detail.updated_at }}</h1>
-        <p>userid : {{ article_detail.user }}</p>
+        <!-- <p>{{ author.user }}</p> -->
         <button @click="goBack">목록으로 돌아가기</button>
-        <button @click="startEditing">수정하기</button>
+        <div v-if="store.token">
+          <div>
+            <button @click="startEditing">수정하기</button>
+          </div>
+      </div>
       </div>
       <div>
       <div v-if="isEditing">
@@ -40,6 +44,7 @@
   const modifiedTitle = ref('')
   const modifiedContent = ref('')
   const article_detail = ref([])
+  const author = ref({})
 
   const goBack = () => {
     router.go(-1)
@@ -87,9 +92,11 @@
     })
       .then((res) => {
         article_detail.value = res.data
+        author.value = res.data
         console.log(res.data)
       })
       .catch((err) => console.log(err))
+      
   })
 </script>
 

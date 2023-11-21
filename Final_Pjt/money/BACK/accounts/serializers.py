@@ -42,3 +42,9 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['financial_products',]
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['money', 'age', 'salary', 'nickname','username',]
