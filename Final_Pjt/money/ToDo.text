@@ -1,0 +1,10 @@
+Vue store부터 해야함
+
+components, views 다 해봐야함 
+장고 migration 되는지 봐야함 (db 잘 저장되는지)
+예금 디테일 받아오는 router 봐야함
+적금 디테일 받아오는 함수 만들어야함
+
+FinView에서 예금View 적금View 나눠야함
+로그인 로그아웃 App.view에서 아직 적용 안해놨음 (임시로 적용해본거 memory.vue에 있음)
+안되면 인생 망함
