@@ -43,7 +43,6 @@ const router = useRouter()
 console.log(router.currentRoute)
 console.log(route)
 const store = useCounterStore()
-const usernmae = 
 onMounted(() => {
   store.name
 })

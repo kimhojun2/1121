@@ -57,7 +57,7 @@ export const useCounterStore = defineStore('counter', () => {
       // 두 번째 axios 요청
       const secondRes = await axios({
         method: 'get',
-        url: `${API_URL}/profile/accounts/${username}/`,
+        url: `${API_URL}/profile/user/${username}/`,
       });
   
       // 두 번째 요청이 성공한 경우

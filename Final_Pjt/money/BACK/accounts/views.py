@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import User
-from .serializers import CustomRegisterSerializer, ItemSerializer, ProfileSerializer
+from .serializers import CustomRegisterSerializer, ItemSerializer, ProfileSerializer, ReadUserSerializer
 import requests
 
 
@@ -50,8 +50,10 @@ def profile_edit(request, username):
 
 
 @api_view(['GET'])
-def article_user(request, user_pk):
-    user = User.objects.get(pk=user_pk)
-    serializer = ProfileSerializer(user)
+def current_user(request, username):
+    user = User.objects.get(username=username)
+    serializer = ReadUserSerializer(user)
     return Response(serializer.data)
-        
+
+
+
