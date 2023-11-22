@@ -17,6 +17,8 @@ class CustomRegisterSerializer(RegisterSerializer):
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)
     financial_products = serializers.CharField(required=False)
+    travel = serializers.IntegerField(required=False)
+    married = serializers.BooleanField(required=False)
     
     
     def get_cleaned_data(self):
@@ -28,6 +30,8 @@ class CustomRegisterSerializer(RegisterSerializer):
         'money': self.validated_data.get('money', ''),
         'salary': self.validated_data.get('salary', ''),
         'financial_products': self.validated_data.get('financial_products', ''),
+        'travel': self.validated_data.get('travel', ''),
+        'married': self.validated_data.get('married', ''),
         }
     def save(self, request):
         adapter = get_adapter()

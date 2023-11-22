@@ -13,6 +13,10 @@ class User(AbstractUser):
     salary = models.IntegerField(blank=True, null=True)
     # 리스트 데이터 저장을 위해 Text 형태로 저장
     financial_products = models.TextField(blank=True, null=True)
+    # 여행횟수 추가 
+    travel = models.IntegerField(blank=True, null=True)
+    # 결혼 여부
+    married = models.BooleanField(blank=True, null=True)
     # superuser fields
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -39,6 +43,10 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         money = data.get("money")
         salary = data.get("salary")
         financial_product = data.get("financial_products")
+        # 여행 횟수 추가
+        travel = data.get("travel")
+        # 결혼 여부
+        married = data.get('married')
 
         user_email(user, email)
         user_username(user, username)
@@ -60,6 +68,17 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             if len(financial_products) > 1:
                 financial_products = ','.join(financial_products)
                 user_field(user, "financial_products", financial_products)
+
+        # 여행
+        if travel:
+            user.travel = travel
+
+        # 결혼
+        if married:
+            user.married = married
+
+
+
         if "password1" in data:
             user.set_password(data["password1"])
         else:

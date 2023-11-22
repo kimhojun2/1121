@@ -6,6 +6,10 @@ from rest_framework.decorators import api_view
 from .models import User
 from .serializers import CustomRegisterSerializer, ItemSerializer, ProfileSerializer, ReadUserSerializer
 import requests
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+import json
+
 
 
 # Create your views here.
