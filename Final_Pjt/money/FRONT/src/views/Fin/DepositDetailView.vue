@@ -61,14 +61,21 @@ const selectitem = function () {
     })
     .catch((err) => {
       console.log(err);
+      alert('로그인 후 사용 가능합니다.')
     });
 };
 
 onMounted(async () => {
+  store.currentUser
+  console.log('list : ', list)
   try {
     const res = await axios.get(`${store.API_URL}/fin/deposit-product/${route.params.id}/`);
     deposit.value = res.data;
-    isAlreadySelected.value = String(list.value.financial_products).includes(deposit.value.fin_prdt_cd);
+    console.log(res)
+    if (store.currentUser) {
+      if (list.value) {
+        isAlreadySelected.value = String(list.value.financial_products).includes(deposit.value.fin_prdt_cd);
+    }}
     isLoading.value = false;
   } catch (err) {
     console.log(err);

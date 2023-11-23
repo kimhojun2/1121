@@ -70,10 +70,13 @@
 
 
 onMounted(async () => {
+  store.currentUser
   try {
     const res = await axios.get(`${store.API_URL}/fin/saving-product/${route.params.id}/`);
     saving.value = res.data;
-    isAlreadySelected.value = String(list.value.financial_products).includes(saving.value.fin_prdt_cd);
+    if (store.currentUser) {
+      isAlreadySelected.value = String(list.value.financial_products).includes(deposit.value.fin_prdt_cd);
+    }
     isLoading.value = false;
   } catch (err) {
     console.log(err);
