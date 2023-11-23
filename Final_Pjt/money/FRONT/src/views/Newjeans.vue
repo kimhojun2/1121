@@ -1,41 +1,41 @@
 <template>
-    <div>
-      <!-- 다른 컨텐츠를 추가할 수 있습니다 -->
-      <div class="content">
-        <h1>My Awesome Website</h1>
-        <p>Some content here...</p>
-      </div>
-  
-      <!-- 비디오 요소를 추가하고 소스를 지정합니다 -->
-      <!-- <video ref="backgroundVideo" class="fullscreen-video" muted loop autoplay>
-        <source src="@/assets/myVideo.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video> -->
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  
-  const backgroundVideo = ref(null);
-  </script>
-  
-  <style scoped>
-  /* 전체 화면으로 비디오를 확장하도록 스타일링 */
-  .fullscreen-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 비디오 비율 유지 및 전체 화면 채우기 */
-    z-index: -1; /* 다른 컨텐츠 위로 올리기 위해 z-index를 설정합니다 */
-  }
-  
-  .content {
-    position: relative; /* 다른 컨텐츠를 위치시키기 위해 position을 설정합니다 */
-    z-index: 1; /* 비디오 뒤로 이동시키기 위해 z-index를 설정합니다 */
-    color: #fff; /* 다른 컨텐츠의 텍스트 색상 설정 (예시) */
-  }
-  </style>
-  
+  <div>
+    <h1>뉴진스 짱</h1>
+    <carousel :perPageCustom="[[480, 1], [768, 2], [992, 3]]" :autoplay="3000" :loop="true" class="carousel" :wrap-around="true" :breakpoints="breakpoints">
+      <pagination></pagination>
+      <slide v-for="(box, index) in boxes" :key="index">
+        <div class="slide-content">
+          <h2>{{ box.title }}</h2>
+          <p>{{ box.content }}</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination } from 'vue3-carousel';
+
+const boxes = ref([
+  { title: '슬라이드 1', content: '첫 번째 슬라이드 내용' },
+  { title: '슬라이드 2', content: '두 번째 슬라이드 내용' },
+  { title: '슬라이드 3', content: '세 번째 슬라이드 내용' },
+  // 추가적인 슬라이드 내용을 필요에 따라 배열에 추가
+]);
+</script>
+
+<style scoped>
+.carousel {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.slide-content {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>

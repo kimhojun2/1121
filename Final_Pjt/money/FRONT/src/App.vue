@@ -1,31 +1,32 @@
 <template>
-    <header v-if="router.currentRoute.value.name != 'MainPageView'">
-      <nav>
-          <div class="nav-container">
-              <RouterLink :to="{ name: 'HomeView' }">HOME</RouterLink>
-              <RouterLink :to="{ name: 'FinView' }">Fin</RouterLink>
-              <RouterLink :to="{ name: 'MapView' }">Map</RouterLink>
-              <RouterLink :to="{ name: 'ExchangeRateView' }">ExchangeRate</RouterLink>
-              <RouterLink :to="{ name: 'ArticleView' }">Post</RouterLink>
-              <RouterLink :to="{ name: 'Newjeans' }">뉴진스</RouterLink>
-              <div v-if="store.isLogin">
-                <RouterLink :to="{ name: 'ProfileView', params: { username: store.name } }">프로필</RouterLink>
-                <div>
-                <form @submit.prevent="store.logOut">
-                  <input type="submit" value="logOut">
-                </form>
-              </div>
-              </div>
-              <div v-else>
-                <RouterLink :to="{ name: 'SignUpView' }">SignUp</RouterLink>
-                <RouterLink :to="{ name: 'LogInView' }">LogIn</RouterLink>
-              </div>
+  <header v-if="router.currentRoute.value.name != 'MainPageView'">
+    <nav class="custom-nav">
+      <div class="nav-container">
+        <div class="left-links">
+          <RouterLink :to="{ name: 'HomeView' }" class="home-link">HOME</RouterLink>
+        </div>
+        <div class="right-links">
+          <RouterLink :to="{ name: 'FinView' }">Fin</RouterLink>
+          <RouterLink :to="{ name: 'MapView' }">Map</RouterLink>
+          <RouterLink :to="{ name: 'ExchangeRateView' }">ExchangeRate</RouterLink>
+          <RouterLink :to="{ name: 'ArticleView' }">Post</RouterLink>
+          <RouterLink :to="{ name: 'Newjeans' }">뉴진스</RouterLink>
+          <div v-if="store.isLogin" class="profile-section">
+            <RouterLink :to="{ name: 'ProfileView', params: { username: store.name } }">프로필</RouterLink>
+            <form @submit.prevent="store.logOut" class="logout-form">
+              <input type="submit" value="로그아웃" class="logout-button">
+            </form>
           </div>
-      </nav>
+          <div v-else>
+            <RouterLink :to="{ name: 'SignUpView' }">회원가입</RouterLink>
+            <RouterLink :to="{ name: 'LogInView' }">로그인</RouterLink>
+          </div>
+        </div>
+      </div>
+    </nav>
   </header>
   <div v-if="router.currentRoute.value.name != 'MainPageView'">
     <footer class="footer">
-      <!-- 여기에 footer 내용 추가 -->
       <p>&copy; 2023 My Awesome App <small>Sapphi 10th KIM & LIM</small></p>
     </footer>
   </div>
@@ -50,30 +51,65 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 스타일링 추가 */
-nav {
-  background-color: #333;
+header {
+  position: sticky; 
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.custom-nav {
+  background-color: white;
   color: #fff;
+  border-bottom: 2px solid #000;
 }
 
 .nav-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 100%; /* 높이를 100%로 설정하여 내용을 세로로 가운데 정렬 */
+  height: 60px; 
+}
+
+.left-links,
+.right-links {
+  display: flex;
+  align-items: center;
+}
+
+.home-link {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+}
+
+.logout-form {
+  margin-left: 10px;
+}
+
+.logout-button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9em;
 }
 
 nav a {
-  color: #fff;
+  color: black;
   text-decoration: none;
   padding: 10px;
-  transition: transform 0.3s; /* transition 속성을 추가하여 변환 효과를 부드럽게 만듭니다 */
-  margin-right: 100px; /* 각 항목 사이의 오른쪽 마진을 조절합니다 */
+  transition: transform 0.3s;
+  font-size: 0.9em;
 }
 
 nav a:hover {
-  background-color: #555;
-  transform: scale(1.1); /* hover 시에 스케일을 1.1로 확대합니다 */
+  transform: scale(1.1);
 }
 
 .footer {
@@ -87,9 +123,9 @@ nav a:hover {
   text-align: center;
 }
 
-/* 푸터 내의 small 태그에 대한 스타일 */
 .footer small {
-  font-size: 0.2em; /* 조그맣게 만듭니다. */
-  margin-left: 5px; /* Copy 텍스트와 원래 텍스트 사이의 여백을 조절합니다. */
+  font-size: 0.2em;
+  margin-left: 5px;
 }
+
 </style>

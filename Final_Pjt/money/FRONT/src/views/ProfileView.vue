@@ -1,30 +1,14 @@
 <template>
   <div class="profile-container">
+    
     <div v-if="isLoading" class="loading">Loading...</div>
     <div v-else>
-      <div class="profile-box">
-        <h1 class="username">{{ info.username }}</h1>
-        <div class="info-container">
-          <div class="info-item">
-            <strong>Money:</strong> {{ info.money }}
-          </div>
-          <div class="info-item">
-            <strong>Salary:</strong> {{ info.salary }}
-          </div>
-          <div class="info-item">
-            <strong>Age:</strong> {{ info.age }}
-          </div>
-          <div v-if="info.financial_products" class="info-item">
-            <strong>Financial Products:</strong>
-            <div v-for="product in info.financial_products.split(',')" :key="product">
-              <span class="product">{{ product.trim() }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 수정 폼 -->
-      <form v-if="isEditMode" @submit.prevent="submitForm">
+      <div style="text-align: center; font-size: 30px; margin-bottom: 15px;"><strong>MY PROFILE</strong></div>
+      <div class="profile-box" style="height: 140px; display: flex; justify-content: center; align-items: center;">
+        <div>
+        <span style="font-size: 20px;"><strong>{{ info.username }}</strong></span> 님의 회원 등급은 <span style="font-size: 20px;"><strong>FAMILY</strong></span> 입니다. <br>
+            <!-- 수정 폼 -->
+            <form v-if="isEditMode" @submit.prevent="submitForm">
         <label for="money">Money:</label>
         <input id="money" v-model="editedInfo.money" />
 
@@ -37,13 +21,44 @@
         <button type="submit">Save</button>
         <button @click="cancelEditMode">Cancel</button>
       </form>
-
-      <!-- 수정 버튼 -->
-      <button v-if="!isEditMode" @click="toggleEditMode">Edit Profile</button>
-      <div>
-      <h1>추천상품</h1>
-      <h1>{{ recommendlist.recommended_products }}</h1>
+      
+      </div>
     </div>
+    <!-- 수정 버튼 -->
+    <button v-if="!isEditMode" @click="toggleEditMode">Edit Profile</button>
+        <div class="info-container">
+          <div>
+          <div class="info-item">
+            <strong>자산내역 : </strong> {{ info.money }}
+          </div>
+          <div class="info-item">
+            <strong>소득 : </strong> {{ info.salary }}
+          </div>
+          <div class="info-item">
+            <strong>나이 :</strong> {{ info.age }}
+            <hr>
+          </div>
+        </div>
+      <div>
+          <div v-if="info.financial_products" class="info-item">
+            <strong>가입 상품</strong>
+            <div v-for="product in info.financial_products.split(',')" :key="product">
+              <span class="product"> {{ product.trim() }}</span>
+            </div>
+          </div>
+        </div>
+        </div>
+      
+
+
+      <div class="recommended-products">
+      <h1>추천상품</h1>
+        <div v-for="recopro in recommendlist.recommended_products">
+          {{ recopro }}
+          <!-- {{ recommendlist.recommended_products }} -->
+
+        </div>
+      </div>
     </div>
 
   </div>
@@ -148,44 +163,51 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* 프로필 상자 */
+.profile-box {
+  display: flex;
+  width: 790px;
+  border: 2px solid black;
+  background-color: lightgray; /* 색상 추가 */
+  font-family: 'Noto Sans KR', sans-serif; /* Google Fonts에서 가져온 글꼴 */
+  padding: 15px;
+}
+
+/* 정보 컨테이너 */
+.info-container {
+  width: 800px;
+  margin-top: 40px;
+  padding: 10px;
+  border: 2px solid black;
+  text-align: center;
+  background-color: lightgray; /* 색상 추가 */
+  font-family: 'Noto Sans KR', sans-serif; /* Google Fonts에서 가져온 글꼴 */
+}
+
+/* 추천 상품 */
+.recommended-products {
+  margin-top: 60px;
+  width: 800px;
+  padding: 10px;
+  border: 2px solid black;
+  text-align: center;
+  background-color: lightgray; /* 색상 추가 */
+  font-family: 'Noto Sans KR', sans-serif; /* Google Fonts에서 가져온 글꼴 */
+}
+
+/* 프로필 컨테이너 */
 .profile-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  padding: 50px;
+  font-family: 'Noto Sans KR', sans-serif; /* Google Fonts에서 가져온 글꼴 */
 }
 
-.profile-box {
-  max-width: 400px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
-.loading {
-  font-size: 18px;
-  text-align: center;
-}
+</style>
 
-.username {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
 
-.info-container {
-  margin-top: 20px;
-}
-
-.info-item {
-  margin-bottom: 10px;
-}
-
-.product {
-  background-color: #f0f0f0;
-  padding: 5px;
-  margin-right: 5px;
-  display: inline-block;
-  border-radius: 5px;
-}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 </style>
