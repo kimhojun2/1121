@@ -62,49 +62,46 @@ def current_user(request, username):
 
 
 def recommend(request, username):
-    print(request,1)
-    existing_data = User.objects.values()
-    # print(request,2)
+    existing_data = User.objects.values('money', 'salary', 'travel','married','financial_products')
+    main_data = User.objects.values('money', 'salary', 'travel','married')
 
     df_existing = pd.DataFrame(existing_data)
+    print(df_existing)
+    df_main = pd.DataFrame(main_data)
+    print(df_main)
+    df_main['travel'] = df_main['travel'].fillna(0)
+    df_existing['financial_products'] = df_existing['financial_products'].fillna('')
     # print(df_existing)
-    
-    user_features_existing = df_existing[['money', 'salary', 'travel']]
-    # print(user_features_existing)
+    # print(df_main)
     new_user_ = User.objects.get(username=username)
     new_user_data = {
-    'username': new_user_.username,
-    'financial_products': new_user_.financial_products,
     'money': new_user_.money,
     'salary': new_user_.salary,
     'travel': new_user_.travel,
     'married': new_user_.married,
-}
-    # print(new_user_data)
-    # new_user_data = ReadUserSerializer(new_user_)
-    # print(new_user_data)
+    }   
     df_new_user = pd.DataFrame([new_user_data])
+    df_new_user['travel'] = df_new_user['travel'].fillna(0)
+    print('^^^^^^^^^^^^^^^^^^^^^^^^^^^')
     # print(df_new_user)
-
-    user_features_new_user = df_new_user[['money', 'salary', 'travel']]
-    
-    # user_features_combined = pd.concat([user_features_existing, user_features_new_user], ignore_index=True)
-    
-    similarities_combined = cosine_similarity(user_features_existing)
+    user_features_combined = pd.concat([df_main, df_new_user], ignore_index=True)
+    similarities_combined = cosine_similarity(user_features_combined)
+    print(similarities_combined)
     similar_users_combined = similarities_combined[-1, :-1]  
-    similar_users_indices = similar_users_combined.argsort()[:-6:-1] 
-
     # 결혼 여부와 돈이 같은 사용자들의 인덱스 찾기
     target_user_married = new_user_data['married']
     target_user_money = new_user_data['money']
+    target_user_travel = new_user_data['travel']
 
-    similar_users_selected = [user for user in similar_users_indices if 
-                    df_existing.loc[user, 'married'] == target_user_married and 
-                    abs(df_existing.loc[user, 'money'] - target_user_money) <= 100000000000000]
-
+    target_users_selected = [index for index, similarity in sorted(enumerate(similar_users_combined), key=lambda x: x[1], reverse=True) if
+                          df_main.loc[index, 'married'] == target_user_married and
+                          df_main.loc[index, 'travel'] == target_user_travel]
+    print('##################&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    print(target_users_selected)
+    # print(similarities_combined)
+    # print(similar_users_combined)
     # 새로운 사용자와 유사한 나이, 결혼 여부가 같고 돈이 비슷한 사용자들이 가입한 상품 출력
-    similar_users_products = df_existing.iloc[similar_users_selected]['financial_products']
-
+    similar_users_products = df_existing.iloc[target_users_selected]['financial_products']
     # 상품을 하나의 리스트로 합침
     all_products = [products.split(',') for products in similar_users_products]
     all_products = [product for sublist in all_products for product in sublist]
@@ -118,5 +115,4 @@ def recommend(request, username):
 
     response_data = {'recommended_products': unique_products}
     # json_response = json.dumps(response_data, ensure_ascii=False)
-    # print(json_response)
     return JsonResponse(response_data, safe=False)

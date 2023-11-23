@@ -16,7 +16,7 @@ class User(AbstractUser):
     # 여행횟수 추가 
     travel = models.IntegerField(blank=True, null=True)
     # 결혼 여부
-    married = models.BooleanField(blank=True, null=True)
+    married = models.BooleanField(blank=True, null=True, default=False)
     # superuser fields
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

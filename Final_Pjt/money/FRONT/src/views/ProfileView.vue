@@ -40,7 +40,12 @@
 
       <!-- 수정 버튼 -->
       <button v-if="!isEditMode" @click="toggleEditMode">Edit Profile</button>
+      <div>
+      <h1>추천상품</h1>
+      <h1>{{ recommendlist.recommended_products }}</h1>
     </div>
+    </div>
+
   </div>
 </template>
 
@@ -62,20 +67,9 @@ const editedInfo = ref({
 })
 const isEditMode = ref(false)
 const isLoading = ref(true)
+const recommendlist = ref([])
 
-onMounted(() => {
-  axios({
-    method: 'get',
-    url: `${store.API_URL}/profile/accounts/${route.params.username}/`,
-  })
-    .then((res) => {
-      info.value = res.data
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      isLoading.value = false
-    })
-})
+
 
 const toggleEditMode = () => {
   isEditMode.value = !isEditMode.value
@@ -121,6 +115,36 @@ const cancelEditMode = () => {
   isEditMode.value = false
   editedInfo.value = { ...info.value }
 }
+
+onMounted(() => {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/profile/accounts/${route.params.username}/`,
+  })
+    .then((res) => {
+      info.value = res.data
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      isLoading.value = false
+    })
+    axios({
+    method: 'get',
+    url: `${store.API_URL}/profile/recommend/${store.name}/`,
+  })
+    .then((res) => {
+      recommendlist.value = res.data
+      console.log(res.data.recommended_products)
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      isLoading.value = false
+    })
+
+
+})
+
+
 </script>
 
 <style scoped>
