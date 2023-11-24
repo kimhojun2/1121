@@ -25,13 +25,13 @@
           <div class="info-item">
             <strong>나이 :</strong> {{ info.age }}
             <form v-if="isEditMode" @submit.prevent="submitForm">
-        <label for="money">Money:</label>
+        <label for="money">자산내역 :</label>
         <input id="money" v-model="editedInfo.money" />
 
-        <label for="salary">Salary:</label>
+        <label for="salary">소득 : </label>
         <input id="salary" v-model="editedInfo.salary" />
 
-        <label for="age">Age:</label>
+        <label for="age">나이 :</label>
         <input id="age" v-model="editedInfo.age" />
 
         <button type="submit">Save</button>
