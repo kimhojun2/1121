@@ -10,7 +10,7 @@
           <RouterLink :to="{ name: 'MapView' }">Map</RouterLink>
           <RouterLink :to="{ name: 'ExchangeRateView' }">ExchangeRate</RouterLink>
           <RouterLink :to="{ name: 'ArticleView' }">Post</RouterLink>
-          <RouterLink :to="{ name: 'Newjeans' }">뉴진스</RouterLink>
+          <!-- <RouterLink :to="{ name: 'Newjeans' }">뉴진스</RouterLink> -->
           <div v-if="store.isLogin" class="profile-section">
             <RouterLink :to="{ name: 'ProfileView', params: { username: store.name } }">프로필</RouterLink>
             <form @submit.prevent="store.logOut" class="logout-form">
@@ -27,7 +27,7 @@
   </header>
   <div v-if="router.currentRoute.value.name != 'MainPageView'">
     <footer class="footer">
-      <p>&copy; 2023 My Awesome App <small>Sapphi 10th KIM & LIM</small></p>
+      <p>&copy; 2023 My Awesome App <small>SSAFY 10th KIM & LIM</small></p>
     </footer>
   </div>
   <RouterView />
@@ -52,10 +52,12 @@ onMounted(() => {
 
 <style scoped>
 header {
-  position: sticky; 
+  position: sticky;
+  /* position: fixed;  */
   top: 0;
   left: 0;
   width: 100%;
+  /* z-index: 1000; */
 }
 
 .custom-nav {

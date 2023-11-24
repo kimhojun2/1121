@@ -1,28 +1,29 @@
 <template>
   <div class="container">
     <div class="section">
-      <img
-        src="https://blog.kakaocdn.net/dn/kH5pO/btr2vntp3VS/BkUwuskAu0hsm6Jn4BBa51/img.png"
-        alt="Sample Image"
-        class="image"
-      />
-    </div>
-
-    <div class="section">
-      <div class="section2_box">
-        NewJeans의 타이틀곡 중 제일 먼저 공개되었던 Attention이 데뷔하자마자 미국 차트쇼에서 1위를 했고, 2022년 8월 9일 23시에 멜론 차트 개편 이후 최초로 데뷔곡으로 1위를 달성했으며 멜론 차트 개편전으로 봐도 예능 방송 음원이 아닌 아이돌 데뷔곡의 경우 2017년 Wanna One의 에너제틱 이후 무려 5년만이며, 걸그룹으로는 2016년 BLACKPINK의 휘파람 이후 6년만에 달성한 대기록이다. 심지어 이용자 수가 폭증하여 2022년 역대 일간 이용자 수가 BIGBANG의 '봄여름가을겨울'에 이어 2위를 달성했다. Spotify에서는 '누적 재생 수', '누적 청취자 수', '누적 팔로워 수' 3개 부문 모두 2022년에 데뷔한 K팝 걸그룹으로서 최고 기록을 달성했고 한국 스포티파이에서 주간 차트 진입과 동시에 1위를 달성했다. 그리고 대한민국 최초로 데뷔곡 Attention으로 미국 스포티파이 차트에 183위로 진입에 성공했으며, 빌보드 Global 200 차트에서 Attention 82위, Hype Boy 116위로 진입했고, 빌보드 Global 200 (미국제외) 차트에서는 Attention 51위, Hype Boy 64위로 각각 진입했다.
-멜론 역사상 데뷔곡으로 일간차트 1위를 한 걸그룹은 2NE1 (Fire), 미쓰에이 (Bad Girl Good Girl), BLACKPINK (휘파람), NewJeans (Attention) 4팀 뿐이고 데뷔곡으로 월간차트 1위까지 한 걸그룹은 2NE1, BLACKPINK, NewJeans 단 3팀 뿐이다
-      </div>
-    </div>
-    <div class="section">
-      <div class="section3_box">
-      <img src="https://blog.kakaocdn.net/dn/KbEsD/btrKHdOlNRy/eBSR4KiCvt41f7qF7KUlA1/img.jpg" alt="">
-    </div>
+      <carousel :perPageCustom="[[480, 1], [768, 2], [992, 3]]" :autoplay="3000" :loop="true" class="carousel" :wrap-around="true">
+      <slide v-for="(box, index) in boxes" :key="index">
+        <div class="slide-content">
+          <img :src="box.src" alt="Carousel Slide">
+          <h2>{{ box.title }}</h2>
+        </div>
+      </slide>
+    </carousel>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination } from 'vue3-carousel';
+
+const boxes = ref([
+  { title: '금융상품', content: '첫 번째 슬라이드 내용', src: 'https://blog.fint.co.kr/app/uploads/2023/05/featured.png' },
+  { title: '환율', content: '두 번째 슬라이드 내용', src: 'https://blog.fint.co.kr/app/uploads/2022/08/%E1%84%91%E1%85%B5%E1%86%AB%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%90%E1%85%A5_%E1%84%92%E1%85%AA%E1%86%AB%E1%84%8B%E1%85%B2%E1%86%AF1.jpg' },
+  { title: '은행검색', content: '세 번째 슬라이드 내용', src: 'https://blog.fint.co.kr/app/uploads/2022/09/%E1%84%91%E1%85%B5%E1%86%AB%E1%84%90%E1%85%B3%E1%84%85%E1%85%A6%E1%84%90%E1%85%A5_220913_%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF.png' },
+  // 추가적인 슬라이드 내용을 필요에 따라 배열에 추가
+]);
 </script>
 
 
@@ -34,6 +35,7 @@
 }
 
 .section {
+  margin-top: 5rem;
   flex: 1;
 }
 
@@ -53,6 +55,21 @@
   max-width: 50%; /* 이미지의 최대 너비를 지정 (필요에 따라 조절) */
   margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
   padding-left: 200px;
+}
+
+.carousel {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.slide-content {
+  text-align: center;
+  padding: 20px;
+
+}
+
+img {
+  width: 600px;
 }
 
 

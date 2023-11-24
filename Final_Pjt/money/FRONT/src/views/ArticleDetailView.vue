@@ -1,54 +1,54 @@
 <template>
-  <div>
-    <div v-if="!isEditing">
+  <div class="article-detail-container">
+    <div v-if="!isEditing" class="article-info-section">
       <hr>
-      <h1>제목 : {{ article_detail.title }}</h1>
-      <h1>내용 : {{ article_detail.content }}</h1>
+      <h1 class="article-title">제목: {{ article_detail.title }}</h1>
+      <p class="article-content">내용: {{ article_detail.content }}</p>
       <hr>
-      <!-- <h1>{{ article_detail.created_at }}</h1>
-      <h1>{{ article_detail.updated_at }}</h1> -->
-      <!-- <h1>{{ article_detail }}</h1> -->
-      <!-- <p>{{ author.user }}</p> -->
-      <button @click="deleteArticle(article)">게시글 삭제</button>
-      <button @click="goBack">목록으로 돌아가기</button>
-      <div v-if="store.token">
+
+      <button @click="deleteArticle(article)" class="delete-button">게시글 삭제</button>
+      <button @click="goBack" class="back-button">목록으로 돌아가기</button>
+
+      <div v-if="store.token" class="edit-button-section">
         <div v-if="store.currentUser.id === article_detail.user">
-          <button @click="startEditing">수정하기</button>
-        </div>
-    </div>
-    <div>
-      <hr>
-      <h1>댓글 목록</h1>
-      <div v-if="article_detail.comment_set">
-        <div v-for="comment in article_detail.comment_set" :key="comment.id">
-          <h3>{{ comment.content }}</h3>
-          <button @click="deleteComment(comment)">댓글 지우기</button>
-          <hr>
+          <button @click="startEditing" class="edit-button">수정하기</button>
         </div>
       </div>
     </div>
-    <div>
-      <form @submit.prevent="commentFrom">
-        <label for="comment_content"></label>
-        <input id="comment_content" v-model="comment_content">
-        <button type="submit">댓글달기</button>
+
+    <!-- 댓글 섹션 -->
+    <div class="comment-section">
+      <hr>
+      <h1>댓글 목록</h1>
+      <div v-if="article_detail.comment_set">
+        <div v-for="comment in article_detail.comment_set" :key="comment.id" class="comment-item">
+          <h3>{{ comment.content }}</h3>
+          <button @click="deleteComment(comment)" class="delete-comment-button">댓글 지우기</button>
+          <hr>
+        </div>
+      </div>
+
+      <!-- 댓글 작성 폼 -->
+      <form @submit.prevent="commentFrom" class="comment-form">
+        <label for="comment_content">댓글 작성:</label>
+        <input id="comment_content" v-model="comment_content" class="comment-input">
+        <button type="submit" class="comment-submit-button">댓글달기</button>
       </form>
     </div>
-  </div>
-    <div v-if="isEditing">
-      <!-- 수정 폼 -->
-      <form @submit.prevent="submitForm">
+
+    <!-- 수정 폼 섹션 -->
+    <div v-if="isEditing" class="edit-form-section">
+      <form @submit.prevent="submitForm" class="edit-form">
         <label for="modifiedTitle">수정된 제목:</label>
-        <input id="modifiedTitle" v-model="modifiedTitle" />
+        <input id="modifiedTitle" v-model="modifiedTitle" class="edit-input" />
 
         <label for="modifiedContent">수정된 내용:</label>
-        <textarea id="modifiedContent" v-model="modifiedContent"></textarea>
+        <textarea id="modifiedContent" v-model="modifiedContent" class="edit-textarea"></textarea>
 
-        <button type="submit">저장</button>
-        <button @click="cancelEditing">취소</button>
+        <button type="submit" class="edit-save-button">저장</button>
+        <button @click="cancelEditing" class="edit-cancel-button">취소</button>
       </form>
     </div>
- 
   </div>
 </template>
 
@@ -181,5 +181,67 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Add your styles here */
+.article-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.article-info-section,
+.comment-section,
+.edit-form-section {
+  margin-bottom: 20px;
+}
+
+.article-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.article-content,
+.comment-item h3 {
+  font-size: 1.2em;
+}
+
+.delete-button,
+.back-button,
+.edit-button,
+.delete-comment-button,
+.comment-submit-button,
+.edit-save-button,
+.edit-cancel-button {
+  background-color: black;
+  color: #fff;
+  padding: 8px 12px; /* 패딩 조절 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 0.9em; /* 폰트 크기 조절 */
+}
+
+.delete-button:hover,
+.back-button:hover,
+.edit-button:hover,
+.delete-comment-button:hover,
+.comment-submit-button:hover,
+.edit-save-button:hover,
+.edit-cancel-button:hover {
+  background-color: black;
+}
+
+.comment-input,
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+}
 </style>

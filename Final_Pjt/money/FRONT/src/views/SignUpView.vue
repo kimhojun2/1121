@@ -1,24 +1,50 @@
 <template>
-  <div>
+  <div class="signup-container">
     <h1>Signup</h1>
-    <form @submit.prevent="signUp">
-      ID : <input type="text" v-model.trim="username">
-      <br>
-      Password : <input type="password" v-model.trim="password1">
-      <br>
-      password 확인:<input type="password" v-model.trim="password2">
-      <br>
-      1년 내 여행횟수 : <input type="travel" v-model.trim="travel">
-      <br>
-      나이 : <input type="age" v-model.trim="age">
-      <br>
-      월급 : <input type="salary" v-model.trim="salary">
-      <br>
-      자산 : <input type="money" v-model.trim="money">
-      <br>
-      결혼 여부: <input type="checkbox" v-model="married">
-      <br>
-      <input type="submit" value="가입">
+    <form @submit.prevent="signUp" class="signup-form">
+      <div class="form-group">
+        <label for="username">ID:</label>
+        <input type="text" id="username" v-model.trim="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password1">Password:</label>
+        <input type="password" id="password1" v-model.trim="password1">
+      </div>
+
+      <div class="form-group">
+        <label for="password2">Password 확인:</label>
+        <input type="password" id="password2" v-model.trim="password2">
+      </div>
+
+      <div class="form-group">
+        <label for="travel">1년 내 여행 횟수:</label>
+        <input type="text" id="travel" v-model.trim="travel">
+      </div>
+
+      <div class="form-group">
+        <label for="age">나이:</label>
+        <input type="text" id="age" v-model.trim="age">
+      </div>
+
+      <div class="form-group">
+        <label for="salary">월급:</label>
+        <input type="text" id="salary" v-model.trim="salary">
+      </div>
+
+      <div class="form-group">
+        <label for="money">자산:</label>
+        <input type="text" id="money" v-model.trim="money">
+      </div>
+
+      <div class="form-group">
+        <label>결혼 여부:</label>
+        <input type="checkbox" v-model="married">
+      </div>
+
+      <div class="form-group">
+        <button type="submit">가입</button>
+      </div>
     </form>
   </div>
 </template>
@@ -55,6 +81,47 @@ const signUp = function () {
 
 </script>
 
-<style>
+<style scoped>
 
+.signup-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* button:hover {
+  background-color: #45a049;
+} */
 </style>

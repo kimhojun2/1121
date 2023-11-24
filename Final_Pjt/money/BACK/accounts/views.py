@@ -113,6 +113,6 @@ def recommend(request, username):
     # print("새로운 사용자와 유사한 나이, 결혼 여부가 같고 돈이 비슷한 사용자들이 가입한 상품:")
     # print(unique_products)
 
-    response_data = {'recommended_products': unique_products}
+    response_data = {'recommended_products': unique_products[1:6]}
     # json_response = json.dumps(response_data, ensure_ascii=False)
     return JsonResponse(response_data, safe=False)

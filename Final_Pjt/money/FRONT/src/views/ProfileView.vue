@@ -53,9 +53,8 @@
 
       <div class="recommended-products">
       <h1>추천상품</h1>
-        <div v-for="recopro in recommendlist.recommended_products">
+        <div v-for="recopro in recommendlist">
           {{ recopro }}
-          <!-- {{ recommendlist.recommended_products }} -->
 
         </div>
       </div>
@@ -69,6 +68,7 @@ import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useCounterStore } from '@/stores/counter'
 import { useRoute, useRouter } from 'vue-router'
+import { computed } from '@vue/reactivity';
 
 const store = useCounterStore()
 const route = useRoute()
@@ -82,6 +82,7 @@ const editedInfo = ref({
 })
 const isEditMode = ref(false)
 const isLoading = ref(true)
+const findlist = ref([])
 const recommendlist = ref([])
 
 
@@ -148,8 +149,34 @@ onMounted(() => {
     url: `${store.API_URL}/profile/recommend/${store.name}/`,
   })
     .then((res) => {
-      recommendlist.value = res.data
-      console.log(res.data.recommended_products)
+      findlist.value = res.data.recommended_products
+      findlist.value.forEach((rec) => {
+        // console.log(rec)
+        
+        const findDep = store.deps.find((dep) => {
+          return rec === dep.fin_prdt_cd
+        })
+        if (findDep) {
+
+          recommendlist.value.push(
+            findDep.fin_prdt_nm
+          );
+        }
+
+      })
+      findlist.value.forEach((rec) => {
+        // console.log(rec)
+        const findDep = store.fins.find((dep) => {
+          return rec === dep.fin_prdt_cd
+        })
+        if (findDep) {
+
+          recommendlist.value.push(
+            findDep.fin_prdt_nm
+          );
+        }
+
+      })
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -157,6 +184,10 @@ onMounted(() => {
     })
 
 
+})
+
+const temp = computed(() => {
+  console.log(recommendlist.value.recommended_products);
 })
 
 
